@@ -117,7 +117,7 @@ Currently the RandomStrategy AI is used, you will have to edit `WordleAIControll
 this.AI = new EliminateStrategy();
 ```
  
- You should also test your new AI using [AIPerformance](src\main\java\no\uib\inf102\wordle\controller\AI\AIPerformance.java)
+ You should also test your new AI using [AIPerformance](.\src\main\java\no\uib\inf102\wordle\controller\AI\AIPerformance.java)
  
  You need to add the following line to register your AI int the AIPerformance class
 

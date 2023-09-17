@@ -16,7 +16,7 @@ Your job will be to finish the implementation and implement an AI which can play
 
 To get a feel for the game you can play it here: https://wordlegame.org/ 
 
-All code you submit will be evaluated on four points:
+All code you submit will be evaluated on five points:
  - **Functional correctness**. Does the program do what it is supposed to do?
   - **Quality of AI**. How well can your AI play the game?
  - **Runtime**. Have you found an efficient solution to the program?
@@ -73,9 +73,9 @@ Now that we have a functional game it is time to create some players which are b
 <img align="right" src="images/Random_manic.png" width="300"/>
 
 Now that we have a functional game we want to implement an AI to play the game for us.
-We already have an AI ready to use. To use it we must switch out the controller class in `WordleMain.java`. Comment out `WordleHumanController` and add `WordleAIController`.
-
-Currently we have one AI: [RandomStrategy](src/main/java/no/uib/inf102/wordle/controller/AI/RandomStrategy.java). To use it we must switch out the controller class in `WordleMain.java`. Comment out `WordleHumanController` and add `WordleAIController`.
+We already have an one AI: [RandomStrategy](./src/main/java/no/uib/inf102/wordle/controller/AI/RandomStrategy.java).
+To use it we must switch out the controller class in `WordleMain.java`. 
+Comment out `WordleHumanController` and add `WordleAIController`.
 
 ```java
 public static void main(String[] args) {
@@ -88,7 +88,7 @@ public static void main(String[] args) {
 }
 ```
 
-This strategy simply guesses a random word every time, until it finds the secret word. This is a very bad strategy and most times you get GAME OVER instead of VICTORY.
+The random strategy simply guesses a random word every time, until it finds the secret word, disregarding the feedback it receives. This is a very bad strategy and most times you get GAME OVER instead of VICTORY.
 
 Even though there was no plan to the guesses in the picture to the right we can figure out that the word probably was "manic".
 If the AI kept the information that was obtained and only guessed words that fit with all the previous answers it would do much better.

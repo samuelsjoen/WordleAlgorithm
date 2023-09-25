@@ -81,6 +81,7 @@ public class WordleAnswer {
      * @return
      */
     public static WordleWord matchWord(String guess, String answer) {
+        charMap = createCharMap(answer);
         int wordLength = answer.length();
         if (guess.length() != wordLength)
             throw new IllegalArgumentException("Guess and answer must have same number of letters but guess = " + guess
@@ -90,7 +91,6 @@ public class WordleAnswer {
         for (int i = 0; i < wordLength; i++) {
             feedback[i] = getAnswerType(guess, answer, i);
         }
-        charMap = createCharMap(answer);
         return new WordleWord(guess, feedback);
     }
 

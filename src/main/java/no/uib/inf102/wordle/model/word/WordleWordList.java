@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Iterator;
 
 import no.uib.inf102.wordle.resources.GetWords;
 
@@ -15,6 +16,12 @@ import no.uib.inf102.wordle.resources.GetWords;
  * possible answers.
  */
 public class WordleWordList {
+	/**
+	 * All indexes which are irrelevant in the search for a possible character in
+	 * case of
+	 * a wrong position char or a wrong char
+	 */
+	private ArrayList<Integer> usedPositions = new ArrayList<>();
 
 	/**
 	 * All words in the game. These words can be used as guesses.
@@ -89,70 +96,103 @@ public class WordleWordList {
 	 * @param feedback
 	 */
 	public void eliminateWords(WordleWord feedback) {
-		List<String> possibleAnswers = possibleAnswers();
+		Iterator<String> iterator = possibleAnswers.iterator();
 
-		// Iterates through every word in possibleAnswers and matches it to the feedback
-		// from the guess
-		for (String word : possibleAnswers) {
-
-			int index = 0;
-
-			for (WordleCharacter c : feedback) {
-				// If the current char in guess is correct, checks if char at same position in
-				// possible guess is also correct.
-				// If not the word will be removed from possible guesses
-				if (c.answerType == AnswerType.CORRECT) {
-					if (c.letter != word.charAt(index)) {
-						remove(word);
-						break;
-					}
-				}
-				index += 1;
-
-				// If the current char in guess is wrong position, checks if char exists in word that is not on the index of
-				// a character that is either wrong_position or correct. If not, word is removed from possible guesses.
-				if (c.answerType == AnswerType.WRONG_POSITION) {
-					if (findPossibleChar(word, c, feedback) == false) {
-						remove(word);
-					}
-
-				}
-
-				// If the current char in guess is wrong, checks if char exists in word that is not on the index of
-				// a character that is either wrong_position or correct. If so word is removed from possible guesses.
-				if (c.answerType == AnswerType.WRONG) {
-					if (findPossibleChar(word, c, feedback) == true) {
-						remove(word);
-					}
-				}
+		while (iterator.hasNext()) {
+			String word = (String) iterator.next();
+			if (WordleWord.isPossibleWord(word, feedback) != true) {
+				iterator.remove();
 			}
 		}
+
+
+		// // Iterates through every word in possibleAnswers and matches it to the feedback
+		// // from the guess
+		// while (iterator.hasNext()) {
+		// 	usedPositions.clear();
+		// 	String word = (String) iterator.next();
+		// 	int index = 0;
+		// 	for (WordleCharacter c : feedback) {
+		// 		// If the current char in guess is correct, checks if char at same position in
+		// 		// possible guess is also correct.
+		// 		// If not the word will be removed from possible guesses
+		// 		if (c.answerType == AnswerType.CORRECT) {
+		// 			if (c.letter != word.charAt(index)) {
+		// 				iterator.remove();
+		// 				break;
+		// 			}
+		// 		}
+		// 		index += 1;
+
+		// 		// If the current char in guess is wrong position, checks if char exists in word
+		// 		// that is not on the index of
+		// 		// a character that is either wrong_position or correct. If not, word is removed
+		// 		// from possible guesses.
+		// 		if (c.answerType == AnswerType.WRONG_POSITION) {
+		// 			if (findPossibleChar(word, c, feedback) == false) {
+		// 				iterator.remove();
+		// 				break;
+		// 			}
+
+		// 		}
+
+		// 		// If the current char in guess is wrong, checks if char exists in word that is
+		// 		// not on the index of
+		// 		// a character that is either wrong_position or correct. If so word is removed
+		// 		// from possible guesses.
+		// 		if (c.answerType == AnswerType.WRONG) {
+		// 			if (findPossibleChar(word, c, feedback) == true) {
+		// 				iterator.remove();
+		// 				break;
+		// 			}
+		// 		}
+		// 	}
+		// 	index = 0;
+		// }
 	}
 
-	/** Method that determines if a character in a possible answer is not at the index of a correct or wrongly positioned character in the guess */
-	private Boolean findPossibleChar(String word, WordleCharacter c, WordleWord feedback) {
-		for (int i = 0; i < word.length(); i++) {
-			if (c.letter == word.charAt(i)) {
-				AnswerType iFeedback = getFeedbackAtIndex(feedback, i);
-				if (iFeedback != AnswerType.CORRECT && iFeedback != AnswerType.WRONG_POSITION) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+	// /**
+	//  * Method that determines if a character in a possible answer is not at the
+	//  * index of a correct or wrongly positioned character in the guess
+	//  */
+	// private Boolean findPossibleChar(String word, WordleCharacter c, WordleWord feedback) {
+	// 	for (int i = 0; i < word.length(); i++) {
+	// 		if (c.letter == word.charAt(i)) {
+	// 			if (isUsedPos(i) != true) {
+	// 				if (c.answerType == AnswerType.WRONG) {
+	// 					usedPositions.add(i);
+	// 					return true;
+	// 				}
+	// 				AnswerType iFeedback = getFeedbackAtIndex(feedback, i);
+	// 				if (iFeedback != AnswerType.CORRECT && iFeedback != AnswerType.WRONG_POSITION) {
+	// 					return true;
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 	return false;
+	// }
 
-	/** Returns the AnswerType of a character in a WordleWord at a certain index */ 
-	private AnswerType getFeedbackAtIndex(WordleWord word, int index) {
-		int indexMatch = 0;
-		for (WordleCharacter c : word) {
-			if (indexMatch == index) {
-				return c.answerType;
-			}
-			indexMatch += 1;
-		}
-		throw new IndexOutOfBoundsException("No such index for word");
-	}
+	// /** Returns the AnswerType of a character in a WordleWord at a certain index */
+	// private AnswerType getFeedbackAtIndex(WordleWord feedback, int index) {
+	// 	int indexMatch = 0;
+	// 	for (WordleCharacter c : feedback) {
+	// 		if (indexMatch == index) {
+	// 			return c.answerType;
+	// 		}
+	// 		indexMatch += 1;
+	// 	}
+	// 	throw new IndexOutOfBoundsException("No such index for word");
+	// }
+
+	// private Boolean isUsedPos(Integer index) {
+	// 	for (Integer usedIndex : usedPositions) {
+	// 		if (index == usedIndex) {
+	// 			return true;
+	// 		}
+	// 	}
+	// 	return false;
+	// }
 
 	/**
 	 * Returns the amount of possible answers in this WordleWordList

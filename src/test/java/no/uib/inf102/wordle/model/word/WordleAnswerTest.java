@@ -104,6 +104,7 @@ public class WordleAnswerTest {
     public void isPossibleWordRocks() {
         WordleAnswer answer = new WordleAnswer("rocks");
         WordleWord feedback = answer.makeGuess("sores");
+        System.out.println("done with feedback generation");
 
         int i = 0;
         for (WordleCharacter c : feedback) {

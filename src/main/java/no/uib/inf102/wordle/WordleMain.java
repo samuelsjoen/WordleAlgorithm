@@ -16,7 +16,7 @@ public class WordleMain {
     WordleBoard board = new WordleBoard(8, 5);
     WordleModel model = new WordleModel(board);
     WordleView view = new WordleView(model);
-    //new WordleHumanController(model, view);
+    // new WordleHumanController(model, view);
     new WordleAIController(model, view);
 
     JFrame frame = new JFrame(WINDOW_TITLE);

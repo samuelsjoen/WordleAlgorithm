@@ -13,8 +13,7 @@ import no.uib.inf102.util.ReadFile;
  */
 public class GetWords {
 
-    private static final String FOLDER_PATH = "C:\\Users\\samue\\OneDrive\\Documents\\Utdanning\\DTEK\\INF102\\sem1\\samuel.sjoen_semesteroppgave-1-wordle\\src\\main\\java\\n" + //
-              "o\\uib\\inf102\\wordle\\resources";
+    private static final String FOLDER_PATH = "src/main/java/no/uib/inf102/wordle/resources";
     private static final String GUESS_WORDS_PATH = FOLDER_PATH + "/guessWords.txt";
     private static final String ANSWER_WORDS_PATH = FOLDER_PATH + "/answerWords.txt";
 

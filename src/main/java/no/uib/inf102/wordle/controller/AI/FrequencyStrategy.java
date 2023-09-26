@@ -21,6 +21,11 @@ public class FrequencyStrategy implements IStrategy {
 
     @Override
     public String makeGuess(WordleWord feedback) {
+        
+        if (feedback != null) {
+            guesses.eliminateWords(feedback);
+        }
+
         List<String> possibleAnswers = guesses.possibleAnswers();
         HashMap<Character, Integer> charCount = makeHashMap(possibleAnswers);
         String bestWord = "";

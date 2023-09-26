@@ -28,7 +28,7 @@ public class FrequencyStrategy implements IStrategy {
         }
 
         List<String> possibleAnswers = guesses.possibleAnswers();
-        HashMap<Character, Integer> charCount = makeHashMap(possibleAnswers);
+        HashMap<Character, Integer> charCount = Utils.makeHashMap(possibleAnswers);
         String bestWord = "";
         int bestScore = 0;
 
@@ -51,30 +51,6 @@ public class FrequencyStrategy implements IStrategy {
             }
         }
         return bestWord;
-    }
-
-    /**
-     * Makes a hashmap of all characters and the number of times they appear in
-     * total for the list of possible answers
-     */
-    private HashMap<Character, Integer> makeHashMap(List<String> possibleAnswers) {
-        HashMap<Character, Integer> charCount = new HashMap<>();
-
-        for (String word : possibleAnswers) {
-            addWordToMap(word, charCount);
-        }
-        return charCount;
-    }
-
-    /**
-     * Takes in a word and updates the character count in the hashmap for each
-     * character appearing in the word
-     */
-    private void addWordToMap(String word, HashMap<Character, Integer> charCount) {
-        for (int i = 0; i < word.length(); i++) {
-            char currentChar = word.charAt(i);
-            charCount.put(currentChar, charCount.getOrDefault(currentChar, 0) + 1);
-        }
     }
 
     @Override

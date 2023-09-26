@@ -18,8 +18,7 @@ public class MyStrategy implements IStrategy {
     public String makeGuess(WordleWord feedback) {
 
         List<String> possibleAnswers = guesses.possibleAnswers();
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'makeGuess'");
+        HashMap<Character, Integer> charCount = FrequencyStrategy.makeHashMap(possibleAnswers);
     }
 
     @Override

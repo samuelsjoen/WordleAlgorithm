@@ -28,29 +28,7 @@ public class FrequencyStrategy implements IStrategy {
         }
 
         List<String> possibleAnswers = guesses.possibleAnswers();
-        HashMap<Character, Integer> charCount = Utils.makeHashMap(possibleAnswers);
-        String bestWord = "";
-        int bestScore = 0;
-
-        // Goes through every word in possibleanswers and assigns a score based on the
-        // regularity of the characters in the word
-        for (String word : possibleAnswers) {
-            int score = 0;
-            ArrayList<Character> usedChars = new ArrayList<>();
-            for (int i = 0; i < word.length(); i++) {
-                Character currentChar = word.charAt(i);
-                if (!usedChars.contains(currentChar)) {
-                    usedChars.add(currentChar);
-                    int characterScore = charCount.get(currentChar);
-                    score += characterScore;
-                }
-            }
-            if (score > bestScore) {
-                bestScore = score;
-                bestWord = word;
-            }
-        }
-        return bestWord;
+        return Utils.getBestWord(possibleAnswers);
     }
 
     @Override

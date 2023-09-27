@@ -8,6 +8,7 @@ public class Utils {
 
     private static String bestWord = "";
     private static int bestScore = 0;
+
     /**
      * Goes through every word in possibleanswers and assigns a score based on the
      * regularity of the characters in the word compared to the entire list of
@@ -30,13 +31,14 @@ public class Utils {
     /**
      * Goes through every word in possibleanswers and assigns a score based on the
      * regularity of the characters in the word compared to the entire list of
-     * possibleAnswers. In addition it finds the word with least chars in common with skipChars
+     * possibleAnswers. In addition it finds the word with least chars in common
+     * with skipChars
      */
     public static String getBestWord(List<String> possibleAnswers, String skipChars) {
         reset();
         HashMap<Character, Integer> charCount = makeHashMap(possibleAnswers);
         int leastChars = 5;
-        for (String word: possibleAnswers) {
+        for (String word : possibleAnswers) {
             int duplicateChars = containsChars(word, skipChars);
             int score = getScore(word, charCount);
             if (score > bestScore && duplicateChars <= leastChars) {
@@ -48,12 +50,26 @@ public class Utils {
         return bestWord;
     }
 
+    public static String getBetterBestWord(List<String> possibleAnswers) {
+        reset();
+        HashMap<Integer, HashMap<Character, Integer>> charCount = makeIndexedHashMap(possibleAnswers);
+        for (String word : possibleAnswers) {
+            int score = getIndexedScore(word, charCount);
+            if (score > bestScore) {
+                bestScore = score;
+                bestWord = word;
+            }
+        }
+        return bestWord;
+
+    }
+
     private static int containsChars(String word, String skipChars) {
         int count = 0;
         for (int i = 0; i < word.length(); i++) {
             for (int j = 0; j < skipChars.length(); j++) {
                 if (word.charAt(i) == skipChars.charAt(j)) {
-                    count+=1;
+                    count += 1;
                 }
             }
         }
@@ -74,6 +90,22 @@ public class Utils {
         return score;
     }
 
+    private static int getIndexedScore(String word, HashMap<Integer, HashMap<Character, Integer>> charCount) {
+        int score = 0;
+        ArrayList<Character> usedChars = new ArrayList<>();
+        for (int i = 0; i < word.length(); i++) {
+            Character currentChar = word.charAt(i);
+            if (!usedChars.contains(currentChar)) {
+                usedChars.add(currentChar);
+                HashMap<Character, Integer> indexMap = charCount.get(i);
+                int characterScore = indexMap.get(currentChar);
+                score += characterScore;
+            }
+        }
+        return score;
+    }
+
+
     private static void reset() {
         bestScore = 0;
         bestWord = "";
@@ -83,7 +115,7 @@ public class Utils {
      * Makes a hashmap of all characters and the number of times they appear in
      * total for the list of possible answers
      */
-    public static HashMap<Character, Integer> makeHashMap(List<String> possibleAnswers) {
+    private static HashMap<Character, Integer> makeHashMap(List<String> possibleAnswers) {
         HashMap<Character, Integer> charCount = new HashMap<>();
 
         for (String word : possibleAnswers) {
@@ -100,6 +132,29 @@ public class Utils {
         for (int i = 0; i < word.length(); i++) {
             char currentChar = word.charAt(i);
             charCount.put(currentChar, charCount.getOrDefault(currentChar, 0) + 1);
+        }
+    }
+
+    private static HashMap<Integer, HashMap<Character, Integer>> makeIndexedHashMap(List<String> possibleAnswers) {
+        HashMap<Integer, HashMap<Character, Integer>> charCount = new HashMap<>();
+        for (String word : possibleAnswers) {
+            addWordToIndexedMap(word, charCount);
+        }
+        return charCount;
+    }
+
+    private static void addWordToIndexedMap(String word, HashMap<Integer, HashMap<Character, Integer>> charCount) {
+        for (int i = 0; i < word.length(); i++) {
+            for (int j = 0; j < word.length(); j++) {
+                char currentChar = word.charAt(i);
+                HashMap<Character, Integer> indexCharCount = charCount.get(i);
+                if (indexCharCount == null) {
+                    indexCharCount = new HashMap<Character, Integer>();
+                    
+                }
+                indexCharCount.put(currentChar, indexCharCount.getOrDefault(currentChar, 0) + 1);
+                charCount.put(i, indexCharCount);
+            }
         }
     }
 }

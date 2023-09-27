@@ -22,24 +22,39 @@ public class MyStrategy implements IStrategy {
 
         List<String> possibleAnswers = guesses.possibleAnswers();
 
+        if (feedback != null) {
+            guesses.eliminateWords(feedback);
+        }
         if (feedback == null) {
             guessCount = 0;
         }
 
-        if (guessCount == 1) {
-            List<String> oldPossibleAnswers = new ArrayList<String>(possibleAnswers);
-            guesses.eliminateWords(feedback);
-            if (possibleAnswers.size() > 10) {
-                possibleAnswers = oldPossibleAnswers;
-            }
-            String guess = Utils.getBestWord(possibleAnswers, feedback.getWordString());
-            guesses.eliminateWords(feedback);
-            guessCount += 1;
-            return guess;
+        // if (guessCount == 3) {
+        //     List<String> oldPossibleAnswers = new ArrayList<String>(possibleAnswers);
+        //     guesses.eliminateWords(feedback);
+        //     possibleAnswers = oldPossibleAnswers;
+        //     String guess = Utils.getBestWord(possibleAnswers, feedback.getWordString());
+        //     guesses.eliminateWords(feedback);
+        //     guessCount += 1;
+        //     if (guess != "") {
+        //         return guess;
+        //     }
+
+        // }
+
+        if (guessCount == 3) {
+        String guess = Utils.getBestWord(possibleAnswers, feedback.getWordString());
+        if (guess != "") {
+        return guess;
+        }
         }
 
+        // if (guessCount == 4) {
+        // return Utils.getBestWord(possibleAnswers);
+        // }
+
         guessCount += 1;
-        return Utils.getBestWord(possibleAnswers);
+        return Utils.getBetterBestWord(possibleAnswers);
     }
 
     @Override

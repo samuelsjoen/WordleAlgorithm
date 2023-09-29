@@ -28,7 +28,7 @@ public class FrequencyStrategy implements IStrategy {
         }
 
         List<String> possibleAnswers = guesses.possibleAnswers();
-        return Utils.getBestWord(possibleAnswers);
+        return AIUtils.getBestWord(possibleAnswers);
     }
 
     @Override

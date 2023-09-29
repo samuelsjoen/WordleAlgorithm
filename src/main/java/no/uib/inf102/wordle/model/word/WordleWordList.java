@@ -1,11 +1,8 @@
 package no.uib.inf102.wordle.model.word;
 
 import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Iterator;
 
 import no.uib.inf102.wordle.resources.GetWords;
@@ -15,7 +12,7 @@ import no.uib.inf102.wordle.resources.GetWords;
  * of words that can be used as guesses and the list of words that can be
  * possible answers.
  */
-public class WordleWordList {
+public class 	WordleWordList {
 
 	/**
 	 * All words in the game. These words can be used as guesses.
@@ -91,7 +88,6 @@ public class WordleWordList {
 	 */
 	public void eliminateWords(WordleWord feedback) {
 		Iterator<String> iterator = possibleAnswers.iterator();
-
 		while (iterator.hasNext()) {
 			String word = (String) iterator.next();
 			if (WordleWord.isPossibleWord(word, feedback) != true) {

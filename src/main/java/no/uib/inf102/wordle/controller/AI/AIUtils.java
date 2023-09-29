@@ -16,8 +16,8 @@ public class AIUtils {
      */
     public static String getBestWord(List<String> possibleAnswers) {
         reset();
-        HashMap<Character, Integer> charCount = makeHashMap(possibleAnswers); // O(mk)
-        for (String word : possibleAnswers) { // O(mk)
+        HashMap<Character, Integer> charCount = makeHashMap(possibleAnswers);
+        for (String word : possibleAnswers) {
             int score = getScore(word, charCount);
             if (score > bestScore) {
                 bestScore = score;
@@ -112,7 +112,7 @@ public class AIUtils {
     private static int getScore(String word, HashMap<Character, Integer> charCount) {
         int score = 0;
         ArrayList<Character> usedChars = new ArrayList<>();
-        for (int i = 0; i < word.length(); i++) { // O(k)
+        for (int i = 0; i < word.length(); i++) { 
             Character currentChar = word.charAt(i);
             int characterScore = charCount.get(currentChar);
             if (!usedChars.contains(currentChar)) {
@@ -150,8 +150,8 @@ public class AIUtils {
     private static HashMap<Character, Integer> makeHashMap(List<String> possibleAnswers) {
         HashMap<Character, Integer> charCount = new HashMap<>();
 
-        for (String word : possibleAnswers) { // O(m)
-            addWordToMap(word, charCount); // O(k)
+        for (String word : possibleAnswers) { 
+            addWordToMap(word, charCount); 
         }
         return charCount;
     }
@@ -161,7 +161,7 @@ public class AIUtils {
      * character appearing in the word.
      */
     private static void addWordToMap(String word, HashMap<Character, Integer> charCount) {
-        for (int i = 0; i < word.length(); i++) { // O(k)
+        for (int i = 0; i < word.length(); i++) { 
             char currentChar = word.charAt(i);
             charCount.put(currentChar, charCount.getOrDefault(currentChar, 0) + 1);
         }

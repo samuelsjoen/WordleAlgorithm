@@ -1,3 +1,6 @@
+# Wordle Algorithm
+By Samuel Sjøen
+
 The following repository contains a Wordle-like game developed by Martin Vatshelle and the teaching team of the course INF102 autumn 2023 at University of Bergen with the exception of the method WordleAnswer::matchWord which I have implemented.
 
 Using the game as a basis I've implemented several AI's to solve the game. This includes:
